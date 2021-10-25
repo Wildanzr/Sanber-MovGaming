@@ -1,0 +1,5 @@
+Nama: "Graita Sukma Febriansyah Triwildan Azmi",
+Email: "graita.sukma@gmail.com",
+Sistem Operasi yang digunakan: "Windows 11",
+Akun Gitlab: "Wildanzr",
+Akun Telegram: "@danzr"
