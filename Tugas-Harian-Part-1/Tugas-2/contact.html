@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <style>
+        #info {
+            border: 1px solid grey;
+            padding: 10px;
+        }
+
+        .judul {
+            text-align: center;
+        }
+
+        .inputan {
+            display: inline;
+            margin-left: 100px;
+        }
+        textarea {
+            display: inline;
+            margin-left: 60px;
+        }
+
+        .radio {
+            display: inline-block;
+            margin-left: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="info">
+        <h1 class="judul">Hubungi Kami</h1>
+        <p>
+            <b>Kantor : </b>di jalan belum jadi
+            <br>
+            <b>Nomor Telepon : </b> <a href="tel:+6281335488360">+6281335488360</a>
+            <br>
+            <b>Email : </b> <a href="mailto:graita.sukma@gmail.com">graita.sukma@gmail.com</a>
+        </p>
+
+        <h1 class=judul>Kirimkan Pesan</h1>
+        <form>
+            <label for="nama">
+                <b>Nama</b>
+            </label>
+            <input class="inputan" type="text" id="nama" name="nama">
+            <br><br>
+            <label for="email">
+                <b>Email</b>
+            </label>
+            <input class="inputan" type="text" id="email" name="email">
+            <br><br>
+            <label for="gender">
+                <b>Jenis Kelamin</b>
+            </label>
+            <div class="radio">
+                <input type="radio" id="male" name="gender" value="Laki-laki">
+                <label for="male">
+                    Laki-laki
+                </label>
+                <br>
+                <input type="radio" id="female" name="gender" value="Perempuan">
+                <label for="female">
+                    Perempuan
+                </label>
+            </div>
+            <br><br>
+            <label for="message">
+                <b>Pesan Anda</b>
+            </label>
+            <textarea id="message" name="message" rows="6" cols="60">
+            </textarea>
+            <br><br>
+            <input type="submit" value="Kirim">
+        </form>
+    </div>
+    <br>
+    <a href="index.html">
+        <button>Kembali ke Index</button>
+    </a>
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap');
+* {
+    font-family: 'Slabo', sans-serif;
+}
+body {
+    margin: 0 auto;
+    padding: 0 auto;
+    background-image: url("../img/pattern.jpg");
+}
+header {
+    background-color: white;
+    display: inline-flex;
+    width: 100%;
+    align-items: center;
+    position: fixed;
+}
+nav {
+    position: absolute;
+    right: 0%;
+}
+nav li {
+    display: inline;
+    margin-right: 30px;
+	margin-left: 30px;
+	list-style-type: none;
+}
+nav a {
+    color: darkblue;
+    font-weight: bold;
+    text-decoration: none;
+}
+section {
+    margin: 0 auto;
+    padding: 0 auto;
+    width:70%;
+    background-color:white;
+}
+section div {
+    margin: 10px;
+}
+section h1 {
+    padding: 25px;
+    text-align: center;
+}
+div h3 {
+    color: darkblue;
+}
+div > a {
+    text-decoration: none;
+}
+div p {
+    width:98%;
+    padding-bottom: 20px;
+    text-align: justify;
+    border-bottom: 1px solid black;
+}
+footer {
+    background-color: black;
+    color: white;
+    width: 100%;
+    position: fixed;
+    bottom: 0%;
+    text-align: center;
+}
