@@ -1,39 +1,12 @@
-import logo from './assets/img/logo.png';
+import CheckBoxSanber from "./Tugas-9/Tugas9"
+import TimeCountDown from "./Tugas-10/Tugas10"
 import './App.css';
-
-function CheckBox(props) {
-  return(
-    <div className="content">
-      <input type="checkBox" id={props.id} name={props.name} value={props.name} />
-      <label style={{paddingLeft:"10px"}}for={props.id}>{props.name}</label>
-    </div>
-  )
-}
-
-const Submit = () => {
-  return(
-    <button>SEND</button>
-  )
-}
 
 function App() {
   return (
-    <div className="card">
-      <div style={{justifyContent: "center",display: "flex", alignItems: "center"}}>
-        <img src={logo} alt="logo-sanber" />
-      </div>
-      <div className="head">
-        <h1 className="title" style={{fontWeight: 400}}>THINGS TO DO</h1>
-        <p style={{fontSize:"13px"}}>During bootcamp in sanbercode</p>
-      </div>
-      <div>
-        <CheckBox id="1" name="Belajar GIT dan CLI"/>
-        <CheckBox id="2" name="Belajar HTML dan CSS"/>
-        <CheckBox id="3" name="Belajar JavaScript"/>
-        <CheckBox id="4" name="Belajar ReactJS Dasar"/>
-        <CheckBox id="5" name="Belajar ReactJS Advance"/>
-      </div>
-      <Submit/>
+    <div>
+      <TimeCountDown />
+      <CheckBoxSanber/>
     </div>
   );
 }
