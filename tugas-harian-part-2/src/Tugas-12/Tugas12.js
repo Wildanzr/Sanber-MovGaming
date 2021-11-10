@@ -1,6 +1,6 @@
 import react, {useState, useEffect} from "react"
 
-const Tugas11 = () => {
+const Tugas12 = () => {
 
   var daftarBuah = [
     {
@@ -88,21 +88,21 @@ const Tugas11 = () => {
 
   return (
     <div style={{width: "100%",margin: "0 auto"}}>
-      <h1 className="titleCenter">Daftar Harga Buah</h1>
+      <h1 className="titleCenter">Daftar Nilai Mahasiswa</h1>
       <table className="customers">
         <thead>
           <tr>
             <th>No</th>
             <th>Nama</th>
-            <th>Harga Total</th>
-            <th>Berat Total</th>
-            <th>Harga per Kg</th>
+            <th>Matakuliah</th>
+            <th>Nilai</th>
+            <th>Indeks Nilai</th>
             <th>Aksi</th>
           </tr>
         </thead>
 
         <tbody>
-          {dataBuah.length > 0
+          {dataBuah.length > 1
             ? (dataBuah.map((data, index) => {
               return (
                 <tr key={index}>
@@ -118,9 +118,7 @@ const Tugas11 = () => {
                 </tr>
               )
             }))
-            : <tr key="-1">
-                <td colspan={6} className="titleCenter">Data Kosong</td>
-              </tr>
+            : <p className="titleCenter">Data Kosong</p>
 }
         </tbody>
       </table>
@@ -145,4 +143,4 @@ const Tugas11 = () => {
   )
 }
 
-export default Tugas11
+export default Tugas12
