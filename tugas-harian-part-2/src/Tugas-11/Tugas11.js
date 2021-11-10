@@ -29,18 +29,26 @@ const Tugas11 = () => {
   const [dataBuah, setDataBuah] = useState(daftarBuah)
   const [temp, setTemp] = useState({
     nama: "",
-    hargaTotal:1,
-    beratTotal:1
+    hargaTotal:0,
+    beratTotal:0
   })
+  const [dataIndex, setDataIndex] = useState(-1)
 
   const isiData = (e) => {
-      let nama = e.target.nama.value
-      let hargaTotal = e.target.hargaTotal.value
-      let beratTotal = e.target.beratTotal.value
+    let nama = e.target.nama.value
+    let hargaTotal = e.target.hargaTotal.value
+    let beratTotal = e.target.beratTotal.value
+    
+    if(dataIndex === -1) {
       let dataBaru = [...dataBuah, {nama, hargaTotal, beratTotal}]
 
       setDataBuah(dataBaru)
-
+    } else {
+      let dataBaru = dataBuah
+      dataBaru[dataIndex] = {nama:nama, hargaTotal:hargaTotal, beratTotal:beratTotal}
+    }
+    clearForm()
+    setDataIndex(-1)
     e.preventDefault()
   }
 
@@ -48,26 +56,35 @@ const Tugas11 = () => {
     let index = parseInt(e.target.value)
     let isi = dataBuah[index]
     
-    let edit = {nama: isi.nama, hargaTotal: isi.hargaTotal, beratTotal: isi.beratTotal}
-    setTemp(edit)
-    console.log(edit)
+    // let edit = {nama: isi.nama, hargaTotal: parseInt(isi.hargaTotal), beratTotal: isi.beratTotal}
+    setTemp({nama: isi.nama, hargaTotal: parseInt(isi.hargaTotal), beratTotal: isi.beratTotal})
+    setDataIndex(index)
     
     e.preventDefault()
   }
 
   const hapusData = (e) => {
+    e.preventDefault()
     let index = parseInt(e.target.value)
     let dihapus = dataBuah
     dihapus.splice(index, 1)
-    console.log("Dihapus", dihapus)
-    setDataBuah(dihapus)
-
-    e.preventDefault()
+    setDataBuah([...dihapus])
+  }
+  //#ask kenapa clearForm pada input hargaTotal dan beratTotal tidak bisa berubah ya?
+  const clearForm = () => {
+    let form = {
+      nama: "",
+      hargaTotal:0,
+      beratTotal:0
+    }
+    document.getElementById("hargaTotal").innerText = "0"
+    setTemp(form)
+    console.log("TES")
   }
 
   return (
     <div style={{width: "100%",margin: "0 auto"}}>
-      <h1 style={{textAlign: "center",margin: "0 auto"}}>Daftar Harga Buah</h1>
+      <h1 className="titleCenter">Daftar Harga Buah</h1>
       <table className="customers">
         <thead>
           <tr>
@@ -81,7 +98,7 @@ const Tugas11 = () => {
         </thead>
 
         <tbody>
-          {dataBuah
+          {dataBuah.length > 1
             ? (dataBuah.map((data, index) => {
               return (
                 <tr key={index}>
@@ -97,13 +114,13 @@ const Tugas11 = () => {
                 </tr>
               )
             }))
-            : <h1>Data Kosong</h1>
+            : <p className="titleCenter">Data Kosong</p>
 }
         </tbody>
       </table>
       <br/>
       <br/>
-      <h1 style={{textAlign: "center",margin: "0 auto"}}>Form Daftar Harga Buah</h1>
+      <h1 className="titleCenter">Form Daftar Harga Buah</h1>
       <div className="formData">
         <form onSubmit={isiData}>
           <label htmlFor="nama">Nama</label>
