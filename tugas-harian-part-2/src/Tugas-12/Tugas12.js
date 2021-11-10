@@ -1,75 +1,45 @@
-import react, {useState, useEffect} from "react"
+import {useState, useEffect} from "react"
+import axios from "axios"
 
 const Tugas12 = () => {
 
-  var daftarBuah = [
-    {
-      nama: "Nanas",
-      hargaTotal: 100000,
-      beratTotal: 4000
-    }, {
-      nama: "Manggis",
-      hargaTotal: 350000,
-      beratTotal: 10000
-    }, {
-      nama: "Nangka",
-      hargaTotal: 90000,
-      beratTotal: 2000
-    }, {
-      nama: "Durian",
-      hargaTotal: 400000,
-      beratTotal: 5000
-    }, {
-      nama: "Strawberry",
-      hargaTotal: 120000,
-      beratTotal: 6000
-    }
-  ]
-
-  const [dataBuah, setDataBuah] = useState(daftarBuah)
+  const [dataMahasiswa, setDataMahasiswa] = useState([])
 
   const [input, setInput] = useState({
     nama: "",
-    hargaTotal: 0,
-    beratTotal: 0
-})
-
+    mataKuliah: "",
+    nilai: 0
+  })
+  const [fetch, setFetch] = useState(true)
   const [dataIndex, setDataIndex] = useState(-1)
 
-  const isiData = (e) => {
-    let nama = e.target.nama.value
-    let hargaTotal = e.target.hargaTotal.value
-    let beratTotal = e.target.beratTotal.value
-    
-    if(dataIndex === -1) {
-      let dataBaru = [...dataBuah, {nama, hargaTotal, beratTotal}]
+  useEffect(() => {
 
-      setDataBuah(dataBaru)
-    } else {
-      let dataBaru = dataBuah
-      dataBaru[dataIndex] = {nama:nama, hargaTotal:hargaTotal, beratTotal:beratTotal}
+    const getData = async() => {
+      let result = await axios.get(`http://backendexample.sanbercloud.com/api/student-scores`)
+      
+      setDataMahasiswa([...result.data])
     }
-    clearForm()
-    setDataIndex(-1)
-    e.preventDefault()
-  }
 
-  const editData = (e) => {
-    let index = parseInt(e.target.value)
-    let isi = dataBuah[index]
-
-    setInput({nama: isi.nama, hargaTotal: isi.hargaTotal, beratTotal: isi.beratTotal})
-    setDataIndex(index)
+    if(fetch) {
+      getData()
+      setFetch(false)
+    }
     
-  }
+  }, [fetch, setFetch], [dataMahasiswa, setDataMahasiswa])
 
-  const hapusData = (e) => {
-    let index = parseInt(e.target.value)
-    let dihapus = dataBuah
-    dihapus.splice(index, 1)
-    setDataBuah([...dihapus])
+  const iNilai = (n) => {
+    if(n >= 80)
+      return "A"
+    else if(n >= 70 && n < 80)
+      return "B"
+    else if(n >= 60 && n < 70)
+      return "C"
+    else if(n >= 50 && n < 60)
+      return "D"
+    else 
+      return "E"
   }
-
   const handleChange = (event) => {
         let typeOfValue = event.target.value
         let name = event.target.name
@@ -77,15 +47,61 @@ const Tugas12 = () => {
         setInput({...input, [name] : typeOfValue})
     }
 
+  const tambahData = (e) => {
+    let namaMhs = e.target.nama.value
+    let mk = e.target.mataKuliah.value
+    let nilai = e.target.nilai.value
+
+    if (dataIndex === -1) {
+      axios.post(`http://backendexample.sanbercloud.com/api/student-scores`, {
+        name: namaMhs,
+        course: mk,
+        score: nilai
+      }).then((res) => {
+        setFetch(true)
+      })
+    } else {
+      axios.put(`http://backendexample.sanbercloud.com/api/student-scores/${dataIndex}`, {
+        name: namaMhs,
+        course: mk,
+        score: nilai
+      }).then((res) => {
+        setFetch(true)
+      })
+    }
+    clearForm()
+    setDataIndex(-1)
+    e.preventDefault()
+  }
+
+  const perbaruiData = (e) => {
+    let data = dataMahasiswa[e.target.value]
+    let temp = {
+      nama: data.name,
+      mataKuliah: data.course,
+      nilai: data.score
+    }
+    setInput(temp)
+    setDataIndex(data.id)
+  }
+
+  const hapusData =(e) => {
+    let dataId = dataMahasiswa[parseInt(e.target.value)].id
+
+    axios.delete(`http://backendexample.sanbercloud.com/api/student-scores/${dataId}`)
+    .then((res) => {
+      setFetch(true)
+    })
+  }
+
   const clearForm = () => {
     let form = {
       nama: "",
-      hargaTotal:0,
-      beratTotal:0
+      mataKuliah: "",
+      nilai:0
     }
     setInput(form)
   }
-
   return (
     <div style={{width: "100%",margin: "0 auto"}}>
       <h1 className="titleCenter">Daftar Nilai Mahasiswa</h1>
@@ -94,47 +110,50 @@ const Tugas12 = () => {
           <tr>
             <th>No</th>
             <th>Nama</th>
-            <th>Matakuliah</th>
+            <th>Mata Kuliah</th>
             <th>Nilai</th>
             <th>Indeks Nilai</th>
             <th>Aksi</th>
           </tr>
         </thead>
-
         <tbody>
-          {dataBuah.length > 1
-            ? (dataBuah.map((data, index) => {
-              return (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{data.nama}</td>
-                  <td>{data.hargaTotal}</td>
-                  <td>{data.beratTotal / 1000} Kg</td>
-                  <td>{data.hargaTotal / (data.beratTotal / 1000)}</td>
-                  <td>
-                    <button className="button" value={index} onClick={editData}>Edit</button>
-                    <button className="button del" value={index} onClick={hapusData}>Hapus</button>
-                  </td>
+          {
+            dataMahasiswa.length > 0 ? (
+              dataMahasiswa.map((data, index) => {
+                return(
+                  <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>{data.name}</td>
+                      <td>{data.course}</td>
+                      <td>{data.score}</td>
+                      <td className="tdCenter">{iNilai(data.score)}</td>
+                      <td className="tdCenter">
+                        <button className="button" value={index} onClick={perbaruiData}>Edit</button>
+                        <button className="button del" value={index} onClick={hapusData}>Hapus</button>
+                    </td>
+                  </tr>
+
+                )
+              })
+            ) : <tr key="-1">
+                  <td colSpan={6} className="titleCenter">Loading data...</td>
                 </tr>
-              )
-            }))
-            : <p className="titleCenter">Data Kosong</p>
-}
+          }
         </tbody>
       </table>
       <br/>
       <br/>
-      <h1 className="titleCenter">Form Daftar Harga Buah</h1>
-      <div className="formData">
-        <form onSubmit={isiData}>
+      <h1 className="titleCenter">Form Nilai Mahasiswa</h1>
+      <div className="formData" onSubmit={tambahData}>
+        <form>
           <label htmlFor="nama">Nama</label>
-          <input type="text" id="nama" name="nama" placeholder="Nama Buah" onChange={handleChange} value={input.nama} required/>
+          <input type="text" id="nama" name="nama" placeholder="Nama Mahasiswa" onChange={handleChange} value={input.nama} required/>
 
-          <label htmlFor="hargaTotal">Harga Total</label>
-          <input type="number" id="hargaTotal" name="hargaTotal" placeholder="Harga Buah" onChange={handleChange} value={input.hargaTotal} required/>
+          <label htmlFor="mataKuliah">Mata Kuliah</label>
+          <input type="text" id="mataKuliah" name="mataKuliah" placeholder="Mata Kuliah" onChange={handleChange} value={input.mataKuliah} required/>
 
-          <label htmlFor="beratTotal">Berat Total (dalam gram)</label>
-          <input type="number" id="beratTotal" name="beratTotal" placeholder="Berat Buah" onChange={handleChange} value={input.beratTotal} required/>
+          <label htmlFor="nilai">Nilai</label>
+          <input type="number" id="nilai" name="nilai" onChange={handleChange} value={input.nilai} min={0} max={100} step={1} required/>
 
           <input type="submit" value="Submit"/>
         </form>
