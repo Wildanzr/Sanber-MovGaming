@@ -1,0 +1,45 @@
+.light {
+  overflow: hidden;
+  background-color: #ddd;
+}
+
+.light a {
+  float: left;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: black;
+  font-size: 17px;
+}
+
+.light a:hover {
+  background-color: #04aaa2;
+  color: white;
+}
+
+.dark {
+  overflow: hidden;
+  background-color: rgb(37, 37, 37);
+}
+
+.dark a {
+  float: left;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  color: white;
+  font-size: 17px;
+}
+
+.dark a:hover {
+  background-color: #04aaa2;
+  color: white;
+}
+.navChange {
+  margin-top: 0;
+  color: white;
+  background-color: #04aaa2
+}
+.navChange:active {
+  background-color: #04aa44
+}

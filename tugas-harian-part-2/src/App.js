@@ -1,20 +1,12 @@
-// import CheckBoxSanber from "./Tugas-9/Tugas9"
-// import TimeCountDown from "./Tugas-10/Tugas10"
-// import  CrudBuah from "./Tugas-11/Tugas11"
-// import  AxiosMahasiswa from "./Tugas-12/Tugas12"
-import Mahasiswa from "./Tugas-13/Mahasiswa"
-import './App.css';
+import Routes from './Routes/Routes'
+// import './App.css'
 
 function App() {
   return (
     <div>
-      {/* <TimeCountDown />
-      <CheckBoxSanber/> */}
-      {/* <CrudBuah/> */}
-      {/* <AxiosMahasiswa/> */}
-      <Mahasiswa/>
+      <Routes/>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

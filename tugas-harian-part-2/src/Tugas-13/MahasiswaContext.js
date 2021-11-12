@@ -1,9 +1,12 @@
 import {createContext, useState} from "react"
+import { useHistory } from "react-router-dom"
 import axios from "axios"
 
 export const MahasiswaContext = createContext()
 
 export const MahasiswaProvider = props => {
+
+    let history = useHistory()
     const [dataMahasiswa, setDataMahasiswa] = useState([])
 
     const [input, setInput] = useState({
@@ -27,6 +30,7 @@ export const MahasiswaProvider = props => {
             score: nilai
           }).then((res) => {
             setFetch(true)
+            history.push("/tugas14")
           })
         } else {
           axios.put(`http://backendexample.sanbercloud.com/api/student-scores/${dataIndex}`, {
@@ -35,6 +39,7 @@ export const MahasiswaProvider = props => {
             score: nilai
           }).then((res) => {
             setFetch(true)
+            history.push("/tugas14")
           })
         }
         clearForm()
@@ -51,6 +56,17 @@ export const MahasiswaProvider = props => {
           nilai: data.score
         }
         setInput(temp)
+      }
+    const perbaruiData2 = async(e) => {
+        let data = await dataMahasiswa[e.target.value]
+        setId(data)
+        let temp = {
+          nama: data.name,
+          mataKuliah: data.course,
+          nilai: data.score
+        }
+        setInput(temp)
+        history.push("/tugas14/tambah")
       }
 
       const setId = (data) => {
@@ -99,6 +115,7 @@ export const MahasiswaProvider = props => {
     let crud = {
         tambahData,
         perbaruiData,
+        perbaruiData2,
         hapusData,
         iNilai,
         clearForm,

@@ -1,4 +1,5 @@
 import logo from '../assets/img/logo.png';
+import "./Tugas9.css"
 
 function CheckBox(props) {
     return(
@@ -11,7 +12,7 @@ function CheckBox(props) {
   
   const Submit = () => {
     return(
-      <button>SEND</button>
+      <button className="btn9">SEND</button>
     )
   }
 

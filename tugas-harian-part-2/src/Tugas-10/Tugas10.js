@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react'
+import "./Tugas10.css"
 
 const TimeCountDown = () => {
     let [tanggal, setTanggal] = useState(new Date())

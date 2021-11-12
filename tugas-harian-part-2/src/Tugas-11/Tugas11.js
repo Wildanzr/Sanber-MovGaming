@@ -1,4 +1,5 @@
-import react, {useState, useEffect} from "react"
+import {useState} from "react"
+import "./Tugas11.css"
 
 const Tugas11 = () => {
 
