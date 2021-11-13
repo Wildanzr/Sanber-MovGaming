@@ -7,6 +7,8 @@ import Tugas12 from "../Tugas-12/Tugas12"
 import Tugas13 from "../Tugas-13/Mahasiswa"
 import Tugas14 from "../Tugas-14/Mahasiswa2"
 import Tugas14Form from "../Tugas-14/Mahasiswa3"
+import Tugas15 from "../Tugas-15/AntdMahasiswa2"
+import Tugas15Form from "../Tugas-15/AntdMahasiswa3"
 import {MahasiswaProvider} from "../Tugas-13/MahasiswaContext"
 // import '../App.css'
 
@@ -37,6 +39,12 @@ const Routes = () => {
                     </Route>
                     <Route path="/tugas14/tambah" exact>
                         <Tugas14Form/>
+                    </Route>
+                    <Route path="/tugas15" exact>
+                        <Tugas15/>
+                    </Route>
+                    <Route path="/tugas15/tambah" exact>
+                        <Tugas15Form/>
                     </Route>
                 </MahasiswaProvider>
             </Switch>

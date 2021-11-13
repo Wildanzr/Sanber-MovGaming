@@ -33,6 +33,9 @@ const Navbar = () => {
       <Link to="/tugas14">
         Tugas-14
       </Link>
+      <Link to="/tugas15">
+        Tugas-15
+      </Link>
     </div>
     <button onClick={changeTheme} className="navChange">Change Theme</button>
     </>

@@ -1,5 +1,5 @@
 import Routes from './Routes/Routes'
-// import './App.css'
+import 'antd/dist/antd.css'
 
 function App() {
   return (

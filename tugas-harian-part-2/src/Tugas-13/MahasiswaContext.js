@@ -1,6 +1,7 @@
 import {createContext, useState} from "react"
 import { useHistory } from "react-router-dom"
 import axios from "axios"
+import { message } from 'antd'
 
 export const MahasiswaContext = createContext()
 
@@ -30,7 +31,7 @@ export const MahasiswaProvider = props => {
             score: nilai
           }).then((res) => {
             setFetch(true)
-            history.push("/tugas14")
+            history.push("/tugas15")
           })
         } else {
           axios.put(`http://backendexample.sanbercloud.com/api/student-scores/${dataIndex}`, {
@@ -39,11 +40,42 @@ export const MahasiswaProvider = props => {
             score: nilai
           }).then((res) => {
             setFetch(true)
-            history.push("/tugas14")
+            history.push("/tugas15")
           })
         }
         clearForm()
         setDataIndex(-1)
+        message.success('Data berhasil ditambahkan')
+        e.preventDefault()
+      }
+
+    const tambahData2 = (e) => {
+        let namaMhs = e.target.nama.value
+        let mk = e.target.mataKuliah.value
+        let nilai = e.target.nilai.value
+    
+        if (dataIndex === -1) {
+          axios.post(`http://backendexample.sanbercloud.com/api/student-scores`, {
+            name: namaMhs,
+            course: mk,
+            score: nilai
+          }).then((res) => {
+            setFetch(true)
+            history.push("/tugas15")
+          })
+        } else {
+          axios.put(`http://backendexample.sanbercloud.com/api/student-scores/${dataIndex}`, {
+            name: namaMhs,
+            course: mk,
+            score: nilai
+          }).then((res) => {
+            setFetch(true)
+            history.push("/tugas15")
+          })
+        }
+        clearForm()
+        setDataIndex(-1)
+        message.success('Data berhasil diperbarui')
         e.preventDefault()
       }
 
@@ -114,6 +146,7 @@ export const MahasiswaProvider = props => {
 
     let crud = {
         tambahData,
+        tambahData2,
         perbaruiData,
         perbaruiData2,
         hapusData,
