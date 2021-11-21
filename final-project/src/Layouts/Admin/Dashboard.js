@@ -6,7 +6,7 @@ import { SmileTwoTone } from '@ant-design/icons'
 import InfoMovies from '../Card/InfoMovies'
 import InfoGames from '../Card/InfoGames'
 
-const { Title , Text } = Typography
+const { Title } = Typography
 
 const Dashboard = () => {
 

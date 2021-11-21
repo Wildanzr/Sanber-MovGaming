@@ -22,6 +22,7 @@ import GameForm from '../Layouts/Form/GameForm'
 import GameBase from '../Layouts/Form/GameBase'
 import MovieBase from '../Layouts/Form/MovieBase'
 import ChangePass from '../Layouts/Admin/ChangePass'
+import Auth from '../Layouts/Admin/Auth'
 
 const {Content} = Layout
 
@@ -50,14 +51,18 @@ const Routes = () => {
                     <Route path='/register' exact component={Register}/>
                     <Route path='/movies/info/:slug' exact component={MovieDetail}/>
                     <Route path='/games/info/:slug' exact component={GameDetail}/>
-                    <Route path='/admin/dashboard' exact component={Dashboard}/>
-                    <Route path='/admin/changepass' exact component={ChangePass}/>
-                    <Route path='/admin/movies/list' exact component={MovieList}/>
-                    <Route path='/admin/movies/form' exact component={MovieForm}/>
-                    <Route path='/admin/movies/edit/:slug' exact component={MovieBase}/>
-                    <Route path='/admin/games/list' exact component={GameList}/>
-                    <Route path='/admin/games/form' exact component={GameForm}/>
-                    <Route path='/admin/games/edit/:slug' exact component={GameBase}/>
+                    {Cookies.get("token") !== undefined ? (
+                      <>
+                      <Route path='/admin/dashboard' exact component={Dashboard}/>
+                      <Route path='/admin/changepass' exact component={ChangePass}/>
+                      <Route path='/admin/movies/list' exact component={MovieList}/>
+                      <Route path='/admin/movies/form' exact component={MovieForm}/>
+                      <Route path='/admin/movies/edit/:slug' exact component={MovieBase}/>
+                      <Route path='/admin/games/list' exact component={GameList}/>
+                      <Route path='/admin/games/form' exact component={GameForm}/>
+                      <Route path='/admin/games/edit/:slug' exact component={GameBase}/>
+                      </>
+                    ) : <Auth/>}
                 </Switch>
             </Content>
           </Layout>

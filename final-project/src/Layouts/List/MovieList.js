@@ -178,13 +178,22 @@ const MovieList = () => {
       }
 
       const onFinish = (values) => {
-        console.log('Success:', values)
-      }
-    
-      const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo)
+        let result = movies.filter((arr) => {
+            if(arr.title.toLowerCase().includes(values.genre.toLowerCase())) {
+                if(arr.year >= values.year && arr.rating >= values.rating) return arr 
+            }
+        })
+
+        setMovies(result)
+        data = result
+        console.log(data)
       }
 
+      const resetForm = () => {
+        filter.resetFields()
+        setFetchMovie(true)
+      }
+    
       const onSearch = (values) => {
           if(values === "") {
               setFetchMovie(true)
@@ -211,6 +220,7 @@ const MovieList = () => {
                 <Collapse>
                     <Panel header={<Text strong>Filter</Text>} key='1' width={"100%"}>
                         <Form
+                            form={filter}
                             name="filter"
                             onFinish={onFinish}
                             autoComplete="off"
@@ -221,7 +231,6 @@ const MovieList = () => {
                                 name="genre"
                                 rules={[{
                                 required: true,
-                                type: 'text',
                                 message: 'Input genre!'
                                 }
                             ]}
@@ -245,21 +254,29 @@ const MovieList = () => {
 
                             <Col span={3}>
                                 <Form.Item
-                                name="duration"
+                                name="rating"
                                 rules={[{
                                 required: true,
-                                message: 'Input duration!'
+                                message: 'Input rating!'
                                 }
                             ]}
                                 >
-                                    <InputNumber placeholder="Duration" min={1} max={200}/>
+                                    <InputNumber placeholder="Rating" min={0} max={10}/>
                                 </Form.Item>
                             </Col>
 
                             <Col span={3}>
                             <Form.Item name='submit'>
-                                <Button type="primary" htmlType="submit">
+                                <Button type="primary" htmlType="submit" >
                                     Filter
+                                </Button>
+                            </Form.Item>
+                            </Col>
+                            
+                            <Col span={3}>
+                            <Form.Item name='submit'>
+                                <Button type="dashed" htmlType="submit" onClick={resetForm}>
+                                    Reset
                                 </Button>
                             </Form.Item>
                             </Col>

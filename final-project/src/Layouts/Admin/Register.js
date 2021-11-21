@@ -1,11 +1,11 @@
 import {Card, Form, Input, Button, Divider} from 'antd'
 import {Typography} from 'antd'
 import {UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
-import { DataContext } from '../../Contexts/DataContext'
-import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 import './Admin.css'
 
@@ -13,8 +13,7 @@ const {Title, Text} = Typography
 
 const Register = () => {
 
-  const { allMethod } = useContext(DataContext)
-  const { login } = allMethod
+  const swal = withReactContent(Swal)
   let history = useHistory()
 
   const onFinish = (values) => {
@@ -24,19 +23,37 @@ const Register = () => {
         email: values.email,
         password: values.password
       }
+      swal.showLoading()
       axios.post(`https://backendexample.sanbersy.com/api/register`, data).then((res) => {
-        console.log(res)
-        history.push('/login')
+        swal.fire({
+          title: <strong>Register success !</strong>,
+          timer: 1500,
+          showConfirmButton: false,
+          icon: "success",
+        }).then(() => {
+          history.push('/login')
+        })
+      }).catch((error) => {
+        if (error.response.status === 400) {
+          swal.fire({
+            title: <strong>Register Failed !</strong>,
+            html: <i>Make sure your confirm password is correct</i>,
+            showConfirmButton: false,
+            timer: 1500,
+            icon: "error",
+          });
+        }
       })
     }else {
-      console.log("Nooo")
+      swal.fire({
+        title: <strong>Your Password is not same!</strong>,
+        timer: 1500,
+        showConfirmButton: false,
+        icon: "warning",
+      })
     }
     console.log(values)
   };
-
-  const onFinishFailed = (errorInfo) => {
-    
-  }
 
   return (
     <Card className='myContainer'>

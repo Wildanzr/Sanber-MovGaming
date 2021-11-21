@@ -2,9 +2,6 @@ import {useState, createContext} from 'react'
 import Cookies from 'js-cookie'
 import axios from 'axios'
 import { useHistory } from "react-router-dom"
-import Swal from "sweetalert2"
-import withReactContent from "sweetalert2-react-content"
-const swal = withReactContent(Swal)
 
 export const DataContext = createContext()
 

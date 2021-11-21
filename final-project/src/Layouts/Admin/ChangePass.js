@@ -1,15 +1,14 @@
-import {Card, Form, Input, Button, Divider} from 'antd'
+import {Card, Form, Input, Button} from 'antd'
 import {Typography} from 'antd'
-import {UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
+import { LockOutlined } from '@ant-design/icons'
 import { DataContext } from '../../Contexts/DataContext'
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import Swal from "sweetalert2"
 import withReactContent from "sweetalert2-react-content"
 
-const {Title, Text} = Typography
+const { Title } = Typography
 
 const ChangePass = () => {
 
@@ -53,9 +52,6 @@ const ChangePass = () => {
         console.log(values)
     }
 
-  const onFinishFailed = (errorInfo) => {
-    
-  }
     return(
         <Card className='myContainer'>
         <Title className='myCenter' level={2}>Reset Password</Title>

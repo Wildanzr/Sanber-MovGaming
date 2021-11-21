@@ -1,4 +1,5 @@
-import { Table, Row, Col, Typography, Space, Button, Image, Tag, Modal, Divider } from 'antd'
+import { Table, Row, Col, Typography, Space, Button, Image, Tag, Modal, Divider, Collapse, 
+Form, InputNumber, Input } from 'antd'
 import { useContext, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import { DataContext } from '../../Contexts/DataContext'
@@ -9,11 +10,15 @@ import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
 const { Title, Text } = Typography
+const { Panel } = Collapse
+const { Search } = Input
 
 const GameList = () => {
 
     const { games, setGames, fetchGame, setFetchGame, state, setState, allMethod } = useContext(DataContext)
     const { deleteGame } = allMethod
+
+    const [filter] = Form.useForm()
     const swal = withReactContent(Swal)
     const [detail, setDetail] = useState([{
         created_at: '',
@@ -49,7 +54,7 @@ const GameList = () => {
         }
     },[fetchGame, setFetchGame])
 
-    const data = games.map((arr, idx) => {
+    let data = games.map((arr, idx) => {
         arr.index = idx+1
         arr.type = []
         if(arr.singlePlayer === 1) arr.type.push('Single Player')
@@ -177,6 +182,41 @@ const GameList = () => {
         setState(true)
       }
 
+      const onFinish = (values) => {
+          console.log(values)
+          console.log(games)
+        let result = games.filter((arr) => {
+            if(arr.genre.toLowerCase().includes(values.genre.toLowerCase())) {
+                if(arr.platform.toLowerCase().includes(values.platform.toLowerCase())) {
+                    return arr 
+                }
+            }
+        })
+
+        setGames(result)
+        data = result
+        console.log(data)
+      }
+
+      const resetForm = () => {
+        filter.resetFields()
+        setFetchGame(true)
+      }
+    
+      const onSearch = (values) => {
+          console.log(values)
+          if(values === "") {
+              setFetchGame(true)
+          } else {
+            let result = games.filter((arr) => {
+                if(arr.name.toLowerCase().includes(values.toLowerCase())) return arr
+            })
+            setGames(result)
+            data = result
+            console.log(data)
+          }
+      }
+
     return(
         <>
         <Row gutter={16}>
@@ -184,6 +224,93 @@ const GameList = () => {
                 <Title level={2} className='myCenterTitle'>Game List</Title>
             </Col>
         </Row>
+
+        <Row gutter={16}>
+            <Col span={24}>
+                <Collapse>
+                    <Panel header={<Text strong>Filter</Text>} key='1' width={"100%"}>
+                        <Form
+                            form={filter}
+                            name="filter"
+                            onFinish={onFinish}
+                            autoComplete="off"
+                            >
+                        <Row gutter={16}>
+                            <Col span={8}>
+                                <Form.Item
+                                name="genre"
+                                rules={[{
+                                required: true,
+                                message: 'Input genre!'
+                                }
+                            ]}
+                                >
+                                    <Input placeholder="Genre"/>
+                                </Form.Item>
+                            </Col>
+                            
+                            <Col span={8}>
+                                <Form.Item
+                                name="platform"
+                                rules={[{
+                                required: true,
+                                message: 'Input platform!'
+                                }
+                            ]}
+                                >
+                                    <Input placeholder="Platform"/>
+                                </Form.Item>
+                            </Col>
+
+                            <Col span={3}>
+                                <Form.Item
+                                name="year"
+                                rules={[{
+                                required: true,
+                                message: 'Input year!'
+                                }
+                            ]}
+                                >
+                                    <InputNumber placeholder="Year" min={1980} max={2021}/>
+                                </Form.Item>
+                            </Col>
+
+                            <Col span={3}>
+                            <Form.Item name='submit'>
+                                <Button type="primary" htmlType="submit" >
+                                    Filter
+                                </Button>
+                            </Form.Item>
+                            </Col>
+                            
+                            <Col span={3}>
+                            <Form.Item name='submit'>
+                                <Button type="dashed" htmlType="submit" onClick={resetForm}>
+                                    Reset
+                                </Button>
+                            </Form.Item>
+                            </Col>
+                        </Row>
+                            
+                        </Form>
+                    </Panel>
+                </Collapse>
+            </Col>
+        </Row>
+        <br/>
+        
+        <Row gutter={16}>
+            <Col span={24}>
+                <Search
+                    placeholder="Search game"
+                    allowClear
+                    enterButton="Search"
+                    size="large"
+                    onSearch={onSearch}
+                />
+            </Col>
+        </Row>
+        <br/>
 
         <Row gutter={16}>
             <Col span={24}>

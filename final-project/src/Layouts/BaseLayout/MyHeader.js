@@ -3,20 +3,40 @@ import { Link } from 'react-router-dom'
 import Cookies from 'js-cookie'
 import { DataContext } from '../../Contexts/DataContext'
 import { useContext } from 'react'
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const {Header} = Layout
 const { SubMenu } = Menu
 
 const MyHeader = () => {
 
+  const swal = withReactContent(Swal)
   const {user, setUser} = useContext(DataContext)
   let floatStyle = 'left'
 
   if(user !== undefined && Cookies.get('token') !== undefined) floatStyle = 'right'
 
   const logOut = () => {
-    Cookies.remove('token')
-    setUser([])
+    Swal.fire({
+      title: 'Logout ?',
+      text: "Will u come back :(",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, log out!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Cookies.remove('token')
+        setUser([])
+          Swal.fire(
+              'Log out!',
+              'Your account was logged out',
+              'success'
+          )
+          }
+    })
   }
 
     return(
